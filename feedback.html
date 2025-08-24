@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Feedback Form</title>
+  <title>Teacher Feedback Form</title>
   <style>
     body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
     .form-container { background-color: #fff; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
@@ -85,7 +85,7 @@
       }
 
       const formData = new FormData(this);
-      const url = "https://script.google.com/macros/s/AKfycbyKYjfxHCTVv_0qznLXvJx1rLZ1FgXjD5eMZp6a-TpiWN21HC2FTdW3-Ve3mjzfLicwEw/exec"; // Replace with Google Apps Script Web App URL
+      const url = "https://script.google.com/macros/s/AKfycbxg7fRMddkXA1Nt74h98lcoh-yqkuSUY4izu7Lxm80L6qrfCrVhm-6VQcILYSIyasxTdg/exec"; // Replace with Google Apps Script Web App URL
 
       fetch(url, { method: "POST", body: formData })
         .then(response => response.text())

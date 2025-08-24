@@ -209,7 +209,7 @@
       e.preventDefault();
 
       const formData = new FormData(this);
-      const url = "https://script.google.com/macros/s/AKfycbzmcCKRZLXu9i-pYfq1qqMvzC9gPHJhoW7XpUPQ0PwhdZ3t7TErDUDe_bqteenFhon-HQ/exec"; // Replace with Google Apps Script Web App URL
+      const url = "https://script.google.com/macros/s/AKfycbwtR1CZo0oDgQNdm2NFBqeOHMfN0ViHj1UMnqo7oDP63Flot1QO3JdYhpMXBc1RbpXVTw/exec"; // Replace with Google Apps Script Web App URL
 
       fetch(url, { method: "POST", body: formData })
         .then(response => response.text())

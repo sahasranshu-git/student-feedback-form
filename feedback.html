@@ -85,6 +85,9 @@
       <label for="parentName">Parent Name</label>
       <input type="text" id="parentName" name="Parent Name" required>
 
+      <label for="parentEmail">Parent Email</label>
+      <input type="email" id="parentEmail" name="Parent Email" required>
+
       <label for="class">Class</label>
       <select id="class" name="Class" required>
         <option value="">Select Class</option>
@@ -102,18 +105,8 @@
       <label for="teacherName">Teacher Name</label>
       <input type="text" id="teacherName" name="Teacher Name" required>
 
-      <label for="rating">Teacher Rating (1 to 5)</label>
-      <select id="rating" name="Rating" required>
-        <option value="">Select Rating</option>
-        <option value="1">1 - Lowest</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5 - Highest</option>
-      </select>
-
       <label for="feedback">Feedback</label>
-      <textarea id="feedback" name="Feedback" placeholder="Write in English, हिंदी, or मराठी..." required></textarea>
+      <textarea id="feedback" name="Feedback" placeholder="Write in English or हिंदी only..." required></textarea>
 
       <button type="submit">Submit</button>
     </form>
@@ -138,6 +131,15 @@
           opt.textContent = sec;
           sectionSelect.appendChild(opt);
         });
+      }
+    });
+
+    // Allow only English + Hindi characters in Feedback
+    document.getElementById("feedback").addEventListener("input", function () {
+      const allowedRegex = /^[\u0900-\u097F\u0020-\u007E\n\r]*$/; // Hindi + English + space + basic punctuation
+      if (!allowedRegex.test(this.value)) {
+        this.value = this.value.replace(/[^ \u0900-\u097F\u0020-\u007E\n\r]/g, "");
+        alert("Only English and Hindi characters are allowed in Feedback.");
       }
     });
 

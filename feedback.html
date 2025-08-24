@@ -49,7 +49,7 @@
       <label for="teacherName">Teacher Name:</label>
       <input type="text" id="teacherName" name="teacherName" required>
 
-      <label for="feedback">Feedback (English or Hindi):</label>
+      <label for="feedback">Feedback (English or Hindi only):</label>
       <textarea id="feedback" name="feedback" placeholder="Write your feedback here..." required></textarea>
 
       <input type="submit" value="Submit Feedback">
@@ -88,13 +88,20 @@
         return;
       }
 
+      const feedback = document.getElementById('feedback').value;
+      const hindiEnglishPattern = /^[\u0900-\u097F\u1CD0-\u1CF6\u1CF8-\u1CF9\u200C-\u200D\u20B9\u25CC\uA830-\uA839a-zA-Z0-9\s.,!?'"-]+$/;
+      if (!hindiEnglishPattern.test(feedback)) {
+        alert("Feedback must be in English or Hindi only.");
+        return;
+      }
+
       const formData = new FormData(this);
-      const url = "https://script.google.com/macros/s/AKfycbwAkALuoryCMb9vINLpq0VrXtjtt74gw48cQTezPzVHQMyNy6qn57vur-KD-9tHKh5hFg/exec"; // Replace with Google Apps Script Web App URL
+      const url = "https://script.google.com/macros/s/AKfycbxjjo8PsSPxq62NFqR0w9n8oeFZ7nEJOGMs0ThhZtz6tWGxL0C5NYxd5y_sMK0a1XudfA/exec"; 
 
       fetch(url, { method: "POST", body: formData })
         .then(response => response.text())
         .then(data => {
-          alert("Thank you! Your feedback has been submitted.");
+          alert("Little Elites says Thank you! Your feedback has been submitted.");
           this.reset();
           sectionSelect.innerHTML = "<option value=''>Select Section</option>";
         })

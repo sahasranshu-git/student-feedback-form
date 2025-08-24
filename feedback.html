@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teacher Feedback Form</title>
+  <title>Student Feedback Form</title>
   <style>
     body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
     .form-container { background-color: #fff; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
-    h2 { text-align: center; color: #333; }
+    .logo { display: block; margin: 0 auto 20px; max-width: 200px; height: auto; }
+    h2 { text-align: center; color: #333; margin-bottom: 20px; }
     label { display: block; margin-top: 15px; font-weight: bold; }
     select, input[type="text"], input[type="email"], textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; resize: vertical; }
     textarea { height: 100px; }
@@ -17,7 +18,10 @@
 </head>
 <body>
   <div class="form-container">
-    <h2>Teacher Feedback Form</h2>
+    <!-- Logo at the top -->
+    <img src="Little_elites_logo.jpg" alt="Little Elites Logo" class="logo">
+    
+    <h2>Student Feedback Form</h2>
     <form id="feedbackForm">
       <label for="studentName">Student Name:</label>
       <input type="text" id="studentName" name="studentName" required>
@@ -85,7 +89,7 @@
       }
 
       const formData = new FormData(this);
-      const url = "https://script.google.com/macros/s/AKfycbxg7fRMddkXA1Nt74h98lcoh-yqkuSUY4izu7Lxm80L6qrfCrVhm-6VQcILYSIyasxTdg/exec"; // Replace with Google Apps Script Web App URL
+      const url = "https://script.google.com/macros/s/AKfycbztPRBU_ZW4kOz6beGkKysoHZ-FVUpElZkubprkmsgtneWZxcrn4IhNm_jaLmukRjqbfg/exec"; // Replace with Google Apps Script Web App URL
 
       fetch(url, { method: "POST", body: formData })
         .then(response => response.text())

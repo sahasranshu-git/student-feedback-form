@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Little Elites Feedback Form</title>
   <style>
     body {
@@ -20,14 +19,6 @@
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .form-container img {
-      display: block;
-      margin: 0 auto 15px auto;
-      width: 120px;
-      max-width: 40%;
-      height: auto;
     }
 
     h2 {
@@ -73,7 +64,6 @@
       background: #45a049;
     }
 
-    /* Mobile optimization */
     @media (max-width: 480px) {
       h2 {
         font-size: 1.3em;
@@ -83,58 +73,12 @@
         padding: 10px;
       }
     }
-
-    /* Modal styling */
-    #confirmationModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: 1000;
-    }
-    #confirmationModal .modal-content {
-      background: #fff;
-      padding: 20px;
-      width: 90%;
-      max-width: 420px;
-      margin: 100px auto;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-    }
-    #confirmationModal img {
-      width: 100px;
-      max-width: 40%;
-      height: auto;
-      margin-bottom: 15px;
-    }
-    #confirmationModal h3 {
-      color: #ff4081;
-      margin-bottom: 10px;
-      font-size: 1.2em;
-    }
-    #confirmationModal p {
-      font-size: 1em;
-      color: #333;
-      margin-bottom: 20px;
-    }
-    #confirmationModal button {
-      background: #4CAF50;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1em;
-    }
   </style>
 </head>
 <body>
   <div class="form-container">
-    <img src="Little_elites_logo.jpg" alt="Little Elites Logo">
     <h2>Little Elites Feedback Form</h2>
-    <form id="feedbackForm">
+    <form id="feedbackForm" method="POST">
       <label for="studentName">Student Name</label>
       <input type="text" id="studentName" name="Student Name" required>
 
@@ -158,70 +102,62 @@
       <label for="teacherName">Teacher Name</label>
       <input type="text" id="teacherName" name="Teacher Name" required>
 
+      <label for="rating">Teacher Rating (1 to 5)</label>
+      <select id="rating" name="Rating" required>
+        <option value="">Select Rating</option>
+        <option value="1">1 - Lowest</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5 - Highest</option>
+      </select>
+
       <label for="feedback">Feedback</label>
-      <textarea id="feedback" name="Feedback" placeholder="Write in English or हिंदी..." required></textarea>
+      <textarea id="feedback" name="Feedback" placeholder="Write in English, हिंदी, or मराठी..." required></textarea>
 
       <button type="submit">Submit</button>
     </form>
   </div>
 
-  <!-- Confirmation Modal -->
-  <div id="confirmationModal">
-    <div class="modal-content">
-      <img src="Little_elites_logo.jpg" alt="Little Elites Logo">
-      <h3>Little Elites says</h3>
-      <p>Thank you! Your feedback has been submitted.</p>
-      <button onclick="closeModal()">OK</button>
-    </div>
-  </div>
-
   <script>
-    // Section dropdown logic
-    const classDropdown = document.getElementById('class');
-    const sectionDropdown = document.getElementById('section');
-
-    const sections = {
+    // class -> section mapping
+    const classSections = {
       "Playgroup": ["Vikramaditya"],
       "Nursery": ["A - Agni", "B - Prithvi", "C - Aakash"],
       "Jr. Kg": ["A - Rafael", "B - Sukhoi", "C - Tejas"],
       "Sr. Kg": ["A - Sindhuraj", "B - Sindhuvijay", "C - Sindhuratna"]
     };
 
-    classDropdown.addEventListener('change', function() {
-      const selectedClass = this.value;
-      sectionDropdown.innerHTML = "<option value=''>Select Section</option>";
-      if (sections[selectedClass]) {
-        sections[selectedClass].forEach(sec => {
-          const option = document.createElement('option');
-          option.value = sec;
-          option.textContent = sec;
-          sectionDropdown.appendChild(option);
+    document.getElementById("class").addEventListener("change", function() {
+      const sectionSelect = document.getElementById("section");
+      sectionSelect.innerHTML = '<option value="">Select Section</option>';
+      if (classSections[this.value]) {
+        classSections[this.value].forEach(sec => {
+          const opt = document.createElement("option");
+          opt.value = sec;
+          opt.textContent = sec;
+          sectionSelect.appendChild(opt);
         });
       }
     });
 
-    // Modal functions
-    function closeModal() {
-      document.getElementById("confirmationModal").style.display = "none";
-    }
-
-    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
       e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
 
-      const formData = new FormData(this);
-      const url = "https://script.google.com/macros/s/AKfycbwtR1CZo0oDgQNdm2NFBqeOHMfN0ViHj1UMnqo7oDP63Flot1QO3JdYhpMXBc1RbpXVTw/exec"; // Replace with Google Apps Script Web App URL
-
-      fetch(url, { method: "POST", body: formData })
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById("confirmationModal").style.display = "block";
-          this.reset();
-          sectionDropdown.innerHTML = "<option value=''>Select Section</option>";
-        })
-        .catch(error => {
-          alert("Error submitting feedback. Please try again.");
-          console.error(error);
-        });
+      fetch("https://script.google.com/macros/s/AKfycbxjjo8PsSPxq62NFqR0w9n8oeFZ7nEJOGMs0ThhZtz6tWGxL0C5NYxd5y_sMK0a1XudfA/exec", {
+        method: "POST",
+        body: data
+      })
+      .then(response => {
+        alert("Little Elites says Thank you! Your feedback has been submitted.");
+        form.reset();
+      })
+      .catch(error => {
+        alert("Error submitting feedback. Please try again.");
+        console.error(error);
+      });
     });
   </script>
 </body>

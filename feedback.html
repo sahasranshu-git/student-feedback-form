@@ -2,94 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Little Elites Feedback Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Feedback Form</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
-
-    .form-container {
-      max-width: 600px;
-      width: 90%;
-      margin: 30px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      color: #ff4081;
-      margin-bottom: 20px;
-      font-size: 1.6em;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1em;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    button {
-      background: #4CAF50;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1em;
-      width: 100%;
-    }
-
-    button:hover {
-      background: #45a049;
-    }
-
-    @media (max-width: 480px) {
-      h2 {
-        font-size: 1.3em;
-      }
-      input, select, textarea, button {
-        font-size: 0.95em;
-        padding: 10px;
-      }
-    }
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+    .form-container { background-color: #fff; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+    .logo { display: block; margin: 0 auto 20px; max-width: 200px; height: auto; }
+    h2 { text-align: center; color: #333; margin-bottom: 20px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    select, input[type="text"], input[type="email"], textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; resize: vertical; }
+    textarea { height: 100px; }
+    input[type="submit"] { margin-top: 20px; background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; }
+    input[type="submit"]:hover { background-color: #45a049; }
   </style>
 </head>
 <body>
   <div class="form-container">
-    <h2>Little Elites Feedback Form</h2>
-    <form id="feedbackForm" method="POST">
-      <label for="studentName">Student Name</label>
-      <input type="text" id="studentName" name="Student Name" required>
+    <!-- Logo at the top -->
+    <img src="Little_elites_logo.jpg" alt="Little Elites Logo" class="logo">
+    
+    <h2>Student Feedback Form</h2>
+    <form id="feedbackForm">
+      <label for="studentName">Student Name:</label>
+      <input type="text" id="studentName" name="studentName" required>
 
-      <label for="parentName">Parent Name</label>
-      <input type="text" id="parentName" name="Parent Name" required>
+      <label for="parentName">Parent Name:</label>
+      <input type="text" id="parentName" name="parentName" required>
 
-      <label for="parentEmail">Parent Email</label>
-      <input type="email" id="parentEmail" name="Parent Email" required>
+      <label for="email">Parent Email:</label>
+      <input type="email" id="email" name="email" required>
 
-      <label for="class">Class</label>
-      <select id="class" name="Class" required>
+      <label for="class">Class:</label>
+      <select id="class" name="class" required>
         <option value="">Select Class</option>
         <option value="Playgroup">Playgroup</option>
         <option value="Nursery">Nursery</option>
@@ -97,23 +41,22 @@
         <option value="Sr. Kg">Sr. Kg</option>
       </select>
 
-      <label for="section">Section</label>
-      <select id="section" name="Section" required>
+      <label for="section">Section:</label>
+      <select id="section" name="section" required>
         <option value="">Select Section</option>
       </select>
 
-      <label for="teacherName">Teacher Name</label>
-      <input type="text" id="teacherName" name="Teacher Name" required>
+      <label for="teacherName">Teacher Name:</label>
+      <input type="text" id="teacherName" name="teacherName" required>
 
-      <label for="feedback">Feedback</label>
-      <textarea id="feedback" name="Feedback" placeholder="Write in English or हिंदी only..." required></textarea>
+      <label for="feedback">Feedback (English, Hindi, or Marathi allowed):</label>
+      <textarea id="feedback" name="feedback" placeholder="Write your feedback here..." required></textarea>
 
-      <button type="submit">Submit</button>
+      <input type="submit" value="Submit Feedback">
     </form>
   </div>
 
   <script>
-    // class -> section mapping
     const classSections = {
       "Playgroup": ["Vikramaditya"],
       "Nursery": ["A - Agni", "B - Prithvi", "C - Aakash"],
@@ -121,45 +64,44 @@
       "Sr. Kg": ["A - Sindhuraj", "B - Sindhuvijay", "C - Sindhuratna"]
     };
 
-    document.getElementById("class").addEventListener("change", function() {
-      const sectionSelect = document.getElementById("section");
-      sectionSelect.innerHTML = '<option value="">Select Section</option>';
-      if (classSections[this.value]) {
-        classSections[this.value].forEach(sec => {
-          const opt = document.createElement("option");
-          opt.value = sec;
-          opt.textContent = sec;
-          sectionSelect.appendChild(opt);
-        });
-      }
-    });
+    const classSelect = document.getElementById("class");
+    const sectionSelect = document.getElementById("section");
 
-    // Allow only English + Hindi characters in Feedback
-    document.getElementById("feedback").addEventListener("input", function () {
-      const allowedRegex = /^[\u0900-\u097F\u0020-\u007E\n\r]*$/; // Hindi + English + space + basic punctuation
-      if (!allowedRegex.test(this.value)) {
-        this.value = this.value.replace(/[^ \u0900-\u097F\u0020-\u007E\n\r]/g, "");
-        alert("Only English and Hindi characters are allowed in Feedback.");
-      }
-    });
-
-    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
-
-      fetch("https://script.google.com/macros/s/AKfycbxO1yII9OSPDl1iRPvmUrtgZiXhD5s-S9QdQ7M2VRL2GGIFb20-OvKy6SxQVa8sIa3sNw/exec", {
-        method: "POST",
-        body: data
-      })
-      .then(response => {
-        alert("Little Elites says Thank you! Your feedback has been submitted.");
-        form.reset();
-      })
-      .catch(error => {
-        alert("Error submitting feedback. Please try again.");
-        console.error(error);
+    classSelect.addEventListener("change", function() {
+      const sections = classSections[this.value] || [];
+      sectionSelect.innerHTML = "<option value=''>Select Section</option>";
+      sections.forEach(sec => {
+        const option = document.createElement("option");
+        option.value = sec;
+        option.textContent = sec;
+        sectionSelect.appendChild(option);
       });
+    });
+
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.match(emailPattern)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      const formData = new FormData(this);
+      const url = "https://script.google.com/macros/s/AKfycbwAkALuoryCMb9vINLpq0VrXtjtt74gw48cQTezPzVHQMyNy6qn57vur-KD-9tHKh5hFg/exec"; // Replace with Google Apps Script Web App URL
+
+      fetch(url, { method: "POST", body: formData })
+        .then(response => response.text())
+        .then(data => {
+          alert("Thank you! Your feedback has been submitted.");
+          this.reset();
+          sectionSelect.innerHTML = "<option value=''>Select Section</option>";
+        })
+        .catch(error => {
+          alert("Error submitting feedback. Please try again.");
+          console.error(error);
+        });
     });
   </script>
 </body>
